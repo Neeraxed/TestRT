@@ -1,24 +1,27 @@
 using System;
 using UnityEngine;
 
-public class ClockTaskManager : TaskManager
+public class PasscodeTaskManager : TaskManager
 {
-    public static ClockTaskManager Instance { get; private set; }
+    public static PasscodeTaskManager Instance { get; private set; }
 
     [SerializeField] private Transform _cameraPosition;
-    [SerializeField] private Clock _clock;
+    [SerializeField] private Passcode _passcode;
+
+    private System.Random r = new System.Random();
 
     private bool _isRunning;
     private bool _isComplete;
-    private System.Random r = new System.Random();
+
     public override bool IsRunning { get => _isRunning; protected set => _isRunning = value; }
     public override bool IsComplete { get => _isComplete; protected set => _isComplete = value; }
     public override Transform CameraPosition { get => _cameraPosition; protected set => _cameraPosition = value; }
 
     public static Action Started;
     public static Action Completed;
-    public static Action Refreshed;
-
+    public static Action AskForRefresh;
+    public static Action OnRefreshed;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -31,21 +34,21 @@ public class ClockTaskManager : TaskManager
     {
         Started += StartTask;
         Completed += CompleteTask;
-        Refreshed += Refresh;
+        AskForRefresh += Refresh;
     }
 
     private void OnDisable()
     {
         Started -= StartTask;
         Completed -= CompleteTask;
-        Refreshed -= Refresh;
+        AskForRefresh -= Refresh;
     }
 
     protected override void StartTask()
     {
         base.StartTask();
         _isRunning = true;
-        Debug.Log("First task Started");
+        Debug.Log("Second task Started");
     }
 
     protected override void CompleteTask()
@@ -53,14 +56,16 @@ public class ClockTaskManager : TaskManager
         base.CompleteTask();
         _isRunning = false;
         _isComplete = true;
-        Debug.Log("First task completed");
+        Debug.Log("Second task completed");
     }
 
     protected override void Refresh()
     {
-        _clock.MinuteDegrees = (Mathf.Round(r.Next(0, 360) / 30) * 30);
-        _clock.HourDegrees= (Mathf.Round(r.Next(0, 360) / 5) * 5);
-
-        Debug.Log("First task Refreshed");
-    }    
+        var a = r.Next(1000, 9999);
+        _passcode.Code = a.ToString();
+        OnRefreshed?.Invoke();
+        Debug.Log("Second task Refreshed");
+        Debug.Log("new pass = " + a);
+    }
 }
+ 

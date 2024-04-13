@@ -18,7 +18,7 @@ public class Interactor : MonoBehaviour
         RaycastHit hit;
         if ((Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, _interactorRange, interactableLayerMask)))
         {
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
+            if (hit.collider.TryGetComponent(out Interactable interactable))
             {
                 ActivateDetector(true);
                 if (Input.GetKeyDown(_interactionKey))
