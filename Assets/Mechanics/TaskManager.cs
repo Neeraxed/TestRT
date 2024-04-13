@@ -1,10 +1,10 @@
+using System;
 using UnityEngine;
 
-public abstract class TasksManager : MonoBehaviour
+public abstract class TaskManager : MonoBehaviour
 {
     public abstract bool IsRunning { get; protected set; }
     public abstract bool IsComplete { get; protected set; }
-
     public abstract Transform CameraPosition { get; protected set; }
 
     protected virtual void StartTask()

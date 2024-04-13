@@ -3,32 +3,36 @@ using UnityEngine.UI;
 
 public class Interactor : MonoBehaviour
 {
-    [SerializeField] private Transform _interactorTransform;
     [SerializeField] private float _interactorRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     [SerializeField] private Image _detector;
+    [SerializeField] private LayerMask interactableLayerMask;
 
-    private void FixedUpdate()
+    public void ActivateDetector(bool value)
     {
-        DetectInteractions();
+        _detector.gameObject.SetActive(value);
     }
-    private void DetectInteractions()
+
+    private void Update()
     {
-        Ray r = new Ray(_interactorTransform.position, _interactorTransform.forward);
-        if (Physics.Raycast(r, out RaycastHit hitInfo, _interactorRange))
+        RaycastHit hit;
+        if ((Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, _interactorRange, interactableLayerMask)))
         {
-            ActivateDetector(true);
-            if (Input.GetKeyDown(_interactionKey) && hitInfo.collider.gameObject.TryGetComponent(out IInteractable interactable))
+            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
-                interactable.Interact();
+                ActivateDetector(true);
+                if (Input.GetKeyDown(_interactionKey))
+                { 
+                    interactable.Interact();    
+                }
             }
         }
         else
             ActivateDetector(false);
     }
 
-    private void ActivateDetector(bool value)
+    private void OnDisable()
     {
-        _detector.gameObject.SetActive(value);
+        ActivateDetector(false);
     }
 }
