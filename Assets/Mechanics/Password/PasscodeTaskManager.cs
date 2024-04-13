@@ -3,24 +3,22 @@ using UnityEngine;
 
 public class PasscodeTaskManager : TaskManager
 {
-    public static PasscodeTaskManager Instance { get; private set; }
+    public static Action Started;
+    public static Action Completed;
+    public static Action AskForRefresh;
+    public static Action OnRefreshed;
 
     [SerializeField] private Transform _cameraPosition;
     [SerializeField] private Passcode _passcode;
 
     private System.Random r = new System.Random();
-
     private bool _isRunning;
     private bool _isComplete;
 
+    public static PasscodeTaskManager Instance { get; private set; }
     public override bool IsRunning { get => _isRunning; protected set => _isRunning = value; }
     public override bool IsComplete { get => _isComplete; protected set => _isComplete = value; }
     public override Transform CameraPosition { get => _cameraPosition; protected set => _cameraPosition = value; }
-
-    public static Action Started;
-    public static Action Completed;
-    public static Action AskForRefresh;
-    public static Action OnRefreshed;
     
     private void Awake()
     {
@@ -48,7 +46,6 @@ public class PasscodeTaskManager : TaskManager
     {
         base.StartTask();
         _isRunning = true;
-        Debug.Log("Second task Started");
     }
 
     protected override void CompleteTask()
@@ -56,7 +53,6 @@ public class PasscodeTaskManager : TaskManager
         base.CompleteTask();
         _isRunning = false;
         _isComplete = true;
-        Debug.Log("Second task completed");
     }
 
     protected override void Refresh()
@@ -64,8 +60,6 @@ public class PasscodeTaskManager : TaskManager
         var a = r.Next(1000, 9999);
         _passcode.Code = a.ToString();
         OnRefreshed?.Invoke();
-        Debug.Log("Second task Refreshed");
-        Debug.Log("new pass = " + a);
     }
 }
  

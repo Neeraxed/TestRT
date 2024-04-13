@@ -1,9 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Transform _additionalCamera;
+    [SerializeField] private float _movementDuration;
 
     private Transform _clock;
     private Transform _passcode;
@@ -13,20 +15,17 @@ public class CameraManager : MonoBehaviour
     {
         _clock = ClockTaskManager.Instance.CameraPosition;
         _passcode = PasscodeTaskManager.Instance.CameraPosition;
-        _plates = ClockTaskManager.Instance.CameraPosition;
+        _plates = PlatesTaskManager.Instance.CameraPosition;
     }
 
-    private void MoveCameraTo(Transform transform)
+    private void MoveCameraTo(Transform tr)
     {
-        while ((_playerTransform.position - transform.position).magnitude > (Vector3.one / 2).magnitude)
+        if(_playerTransform.position != tr.position)
         {
-            //_playerTransform.position = Vector3.MoveTowards(_playerTransform.position, transform.position, 5f);
-            //_additionalCamera.position = Vector3.MoveTowards(_additionalCamera.position, transform.position, 5f);
-            //_additionalCamera.rotation = Quaternion.RotateTowards(_additionalCamera.rotation, transform.rotation, 5f);
+            _additionalCamera.DOMove(tr.position, _movementDuration);
+            _additionalCamera.DOMove(tr.position, _movementDuration);
+            _additionalCamera.DORotate(tr.rotation.eulerAngles, _movementDuration);
 
-            _playerTransform.position = transform.position;
-            _additionalCamera.position = transform.position;
-            _additionalCamera.rotation = transform.rotation;
             _additionalCamera.gameObject.SetActive(true);
             _playerTransform.gameObject.SetActive(false);
         }
@@ -47,7 +46,7 @@ public class CameraManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        ClockTaskManager.Started -= () => MoveCameraTo(ClockTaskManager.Instance.CameraPosition);
+        ClockTaskManager.Started -= () => MoveCameraTo(_clock);
         ClockTaskManager.Completed -= UnLockCamera;
 
         PasscodeTaskManager.Started -= () => MoveCameraTo(_passcode);

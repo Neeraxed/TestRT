@@ -5,8 +5,8 @@ public class Passcode : MonoBehaviour
     [SerializeField] private string _code = "4321";
     [SerializeField] private TextMeshPro _uiText = null;
 
-    string _nr = null;
-    int _nrIndex = 0;
+    private string _nr = null;
+    private int _nrIndex = 0;
 
     public string Code { get => _code; set { if (value.Length >= 4) { _code = value.Substring(0, 4); } else _code = "0000"; } }
 
@@ -32,8 +32,7 @@ public class Passcode : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && PasscodeTaskManager.Instance.IsRunning)
+        if (Input.GetKeyDown(KeyCode.F) && PasscodeTaskManager.Instance.IsRunning)
             PasscodeTaskManager.AskForRefresh?.Invoke();
     }
-
 }

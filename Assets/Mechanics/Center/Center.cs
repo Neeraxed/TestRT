@@ -6,7 +6,6 @@ public class Center : MonoBehaviour
     [SerializeField] Transform _rotating;
     [SerializeField] Transform _moving;
     [SerializeField] Transform _scaling;
-
     [SerializeField] Transform _moveFinish;
     [SerializeField] float _duration;
 

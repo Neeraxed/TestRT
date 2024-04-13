@@ -12,7 +12,7 @@ public class Plates : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && PlatesTaskManager.Instance.IsRunning)
+        if (Input.GetKeyDown(KeyCode.F) && PlatesTaskManager.Instance.IsRunning)
             PlatesTaskManager.OnRefreshed?.Invoke();
     }
 

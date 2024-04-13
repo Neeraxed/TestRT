@@ -6,7 +6,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float _interactorRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     [SerializeField] private Image _detector;
-    [SerializeField] private LayerMask interactableLayerMask;
+    [SerializeField] private LayerMask _interactableLayerMask;
 
     public void ActivateDetector(bool value)
     {
@@ -16,7 +16,7 @@ public class Interactor : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        if ((Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, _interactorRange, interactableLayerMask)))
+        if ((Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, _interactorRange, _interactableLayerMask)))
         {
             if (hit.collider.TryGetComponent(out Interactable interactable))
             {

@@ -5,8 +5,6 @@ public class Interactable : MonoBehaviour
     [SerializeField] private TaskType _task;
     public void Interact()
     {
-        Debug.Log($"{this.name} was interacted");
-
         switch (_task)
         {
             case(TaskType.Clock):
