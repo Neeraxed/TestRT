@@ -13,7 +13,7 @@ public class CameraManager : MonoBehaviour
     {
         _clock = ClockTaskManager.Instance.CameraPosition;
         _passcode = PasscodeTaskManager.Instance.CameraPosition;
-        //_plates = ClockTaskManager.Instance.CameraPosition;
+        _plates = ClockTaskManager.Instance.CameraPosition;
     }
 
     private void MoveCameraTo(Transform transform)
@@ -42,8 +42,8 @@ public class CameraManager : MonoBehaviour
         PasscodeTaskManager.Started += () => MoveCameraTo(_passcode);
         PasscodeTaskManager.Completed += UnLockCamera;
 
-        //PlatesTaskManager.Started += () => MoveCameraTo(_plates);
-        //PlatesTaskManager.Completed += UnLockCamera;
+        PlatesTaskManager.Started += () => MoveCameraTo(_plates);
+        PlatesTaskManager.Completed += UnLockCamera;
     }
     private void OnDisable()
     {
@@ -53,7 +53,7 @@ public class CameraManager : MonoBehaviour
         PasscodeTaskManager.Started -= () => MoveCameraTo(_passcode);
         PasscodeTaskManager.Completed -= UnLockCamera;
 
-        //PlatesTaskManager.Started -= () => MoveCameraTo(_plates);
-        //PlatesTaskManager.Completed -= UnLockCamera;
+        PlatesTaskManager.Started -= () => MoveCameraTo(_plates);
+        PlatesTaskManager.Completed -= UnLockCamera;
     }
 }

@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour
                 PasscodeTaskManager.Started?.Invoke();
                 break;
             case (TaskType.Plates):
-                PasscodeTaskManager.Started?.Invoke();
+                PlatesTaskManager.Started?.Invoke();
                 break;
         }
         

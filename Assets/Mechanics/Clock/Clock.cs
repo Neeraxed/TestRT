@@ -20,12 +20,15 @@ public class Clock : MonoBehaviour
 
     private void OnMouseDown()
     {
-        _minuteHand.Rotate(Vector3.back, 30);
-        _hourHand.Rotate(Vector3.back, 2.5f);
+        if (ClockTaskManager.Instance.IsRunning)
+        {
+            _minuteHand.Rotate(Vector3.back, 30);
+            _hourHand.Rotate(Vector3.back, 2.5f);
 
-        if ((Mathf.Round(_minuteHand.rotation.eulerAngles.z * 2) / 2) == _minuteDegrees &&
-            (Mathf.Round(_hourHand.rotation.eulerAngles.z * 2) / 2) == _hourDegrees)
-            ClockTaskManager.Completed?.Invoke();
+            if ((Mathf.Round(_minuteHand.rotation.eulerAngles.z * 2) / 2) == _minuteDegrees &&
+                (Mathf.Round(_hourHand.rotation.eulerAngles.z * 2) / 2) == _hourDegrees)
+                ClockTaskManager.Completed?.Invoke();
+        }
         
     }
 }
