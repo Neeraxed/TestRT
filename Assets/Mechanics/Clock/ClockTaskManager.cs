@@ -11,11 +11,11 @@ public class ClockTaskManager : TaskManager
     [SerializeField] private Transform _cameraPosition;
     [SerializeField] private Clock _clock;
     
-    public static ClockTaskManager Instance { get; private set; }
     private bool _isRunning;
     private bool _isComplete;
     private System.Random r = new System.Random();
 
+    public static ClockTaskManager Instance { get; private set; }
     public override bool IsRunning { get => _isRunning; protected set => _isRunning = value; }
     public override bool IsComplete { get => _isComplete; protected set => _isComplete = value; }
     public override Transform CameraPosition { get => _cameraPosition; protected set => _cameraPosition = value; }
