@@ -2,14 +2,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PassButton : MonoBehaviour, IPointerClickHandler
+public class PassButton : MonoBehaviour
 {
     public UnityEvent Click;
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-
-    }
 
     private void OnMouseDown()
     {
